@@ -17,8 +17,9 @@ class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
 
-    #has many Items through reviews
     reviews = db.relationship('Review', back_populates='customer')
+
+    items = association_proxy('reviews', 'item', creator=lambda item_obj: Review(item=item_obj))
 
     def __repr__(self):
         return f'<Customer {self.id}, {self.name}>'
